@@ -2,9 +2,11 @@
 
 # Overview
 
-This repository is for the kidnapped vehicle project, which is a part of the Localization course in Udacity's Self-Driving Car Nanodegree.
+This repository is for the kidnapped vehicle project, which is a part of the Localization course in Udacity's Self-Driving Car Nanodegree. The original repo can be found at https://github.com/udacity/CarND-Kidnapped-Vehicle-Project. 
 
+This README.md also based on the original README.md.
 
+<br/><br/>
 
 ## Project Introduction
 
@@ -12,7 +14,7 @@ Your robot has been kidnapped and transported to a new location! Luckily it has 
 
 This project presents a 2 dimensional particle filter in C++. The particle filter uses a map and some initial localization information (analogous to what a GPS would provide). At each time step the filter will also get observation and control data.
 
-
+<br/><br/>
 
 ## Running the Code
 
@@ -26,15 +28,17 @@ Once the install for uWebSocketIO is complete, the main program can be built and
 4. make
 5. ./particle_filter
 
+<br/><br/>
+
 Alternatively some scripts have been included to streamline this process, these can be leveraged by executing the following in the top directory of the project:
 
 1. ./clean.sh
 2. ./build.sh
 3. ./run.sh
 
+<br/><br/>
+
 Tips for setting up your environment can be found [here](https://classroom.udacity.com/nanodegrees/nd013/parts/40f38239-66b6-46ec-ae68-03afd8a601c8/modules/0949fca6-b379-42af-a919-ee50aa304e6a/lessons/f758c44c-5e40-4e01-93b5-1a82aa4e044f/concepts/23d376c7-0195-4276-bdf0-e02f1f3c665d). The program main.cpp has already been filled out, and It uses for uWebSocketIO in communicating with the simulator.
-
-
 
 INPUT: values provided by the simulator to the c++ program
 
@@ -81,7 +85,10 @@ OUTPUT: values provided by the c++ program to the simulator
 
 ["best_particle_sense_y"] <= list of sensed y positions
 
+<br/><br/>
+
 # Implementing the Particle Filter
+
 The directory structure of this repository is as follows:
 
 ```
@@ -107,7 +114,10 @@ root
 
 src/particle_filter.cpp contains the scaffolding of a `ParticleFilter` class and some associated methods, and src/main.cpp contains the code that will actually be running the particle filter and calling the associated methods.
 
+<br/><br/>
+
 ## Inputs to the Particle Filter
+
 The inputs to the particle filter are in the `data` directory.
 
 #### The Map*
@@ -120,7 +130,7 @@ The inputs to the particle filter are in the `data` directory.
 
 > * Map data provided by 3D Mapping Solutions GmbH.
 
-
+<br/><br/>
 
 ## What I've done
 
@@ -186,7 +196,7 @@ num_particles = 100;
   
 	is_initialized = true;
 ```
-
+<br/><br/>
 
 ###  ParticleFilter::prediction()
 
@@ -237,7 +247,7 @@ This function adds measurements to each particle and add random Gaussian noise.
 		particles[i].theta = nd_theta(gen);     
 	}  
 ```
-
+<br/><br/>
 
 ###  ParticleFilter::dataAssociation()
 

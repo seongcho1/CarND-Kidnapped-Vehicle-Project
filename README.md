@@ -4,7 +4,7 @@
 
 This repository is for the kidnapped vehicle project, which is a part of the Localization course in Udacity's Self-Driving Car Nanodegree. The original repo can be found at [here]( https://github.com/udacity/CarND-Kidnapped-Vehicle-Project).
 
-This README.md also based on the original [README.md]( https://github.com/udacity/CarND-Kidnapped-Vehicle-Project/README.md).
+This README.md also based on the original [README.md](https://github.com/udacity/CarND-Kidnapped-Vehicle-Project/blob/master/README.md).
 
 <br/><br/>
 

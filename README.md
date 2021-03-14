@@ -154,7 +154,7 @@ This function sets the number of particles and initialize all particles to their
 
 <div align="left">
 
-
+<br/><br/>
 
 ![init](./img/1init.png)
 
@@ -216,7 +216,7 @@ This function adds measurements to each particle and add random Gaussian noise.
 
 <div align="center">captured from classroom.udacity.com/nanodegrees/nd013
 
-![predict](./img/2predict.png)
+<br/><br/>![predict](./img/2predict.png)
 
 <div align="center">captured from classroom.udacity.com/nanodegrees/nd013
 

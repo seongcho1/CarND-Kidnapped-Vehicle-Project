@@ -1,4 +1,7 @@
+
+
 # Overview
+
 This repository is for the kidnapped vehicle project, which is a part of the Localization course in Udacity's Self-Driving Car Nanodegree.
 
 
@@ -127,7 +130,7 @@ The basic structure was given at [here](https://github.com/udacity/CarND-Kidnapp
 
 <div align="center">captured from classroom.udacity.com/nanodegrees/nd013
 
-
+<div align="left">
 
 ###  ParticleFilter::init()
 
@@ -137,7 +140,7 @@ This function sets the number of particles and initialize all particles to their
 
 <div align="center">captured from classroom.udacity.com/nanodegrees/nd013
 
-
+<div align="left">
 
 Based on the answer in  [here](https://knowledge.udacity.com/questions/29851), 100 particles are usedYou can see there is no significant increase in the accuracy when you use more than 100 particles in the figure below.
 
@@ -148,6 +151,10 @@ num_particles = 100;
 ![number of particles vs. error](https://udacity-user-uploads.s3.us-west-2.amazonaws.com/uploads/user-uploads/f4c3f14f-cab7-4ab1-8c02-5b4a79763070-mobile.png)
 
 <div align="center">captured from knowledge.udacity.com/questions/29851)
+
+<div align="left">
+
+
 
 ```c++
 	/// Initialize all particles to first position with weight = 1
@@ -186,6 +193,10 @@ This function adds measurements to each particle and add random Gaussian noise.
 ![predict](./2predict.png)
 
 <div align="center">captured from classroom.udacity.com/nanodegrees/nd013
+
+<div align="left">
+
+
 
 
 
@@ -265,6 +276,8 @@ This function updates the weights of each particle using a mult-variate Gaussian
 ![update_weights](./3update_weights.png)
 
 <div align="center">captured from classroom.udacity.com/nanodegrees/nd013
+
+<div align="left">
 
 
 
@@ -349,7 +362,7 @@ This function resamples particles based on probability proportional to their wei
 
 <div align="center">captured from classroom.udacity.com/nanodegrees/nd013
 
-
+<div align="left">
 
 ```c++
 /// Resample particles with replacement with probability proportional to their weight
@@ -392,4 +405,6 @@ The things the grading code is looking for are:
 ![in success criteria](./5success.png)
 
 <div align="center">captured from udacity carnd simulator
+
+<div align="left">
 

@@ -346,7 +346,7 @@ while (++i < (int)particles.size())
 			LandmarkObs &p_lmob = predicted_lmobs[k];
 			if (t_ob.id == p_lmob.id)
 				p.weight *= multiv_prob(std_landmark[0], std_landmark[1], 
-                                t_ob.x, t_ob.y, p_lmob.x, p_lmob.y); 
+                                		t_ob.x, t_ob.y, p_lmob.x, p_lmob.y); 
 		}   
     }  
   

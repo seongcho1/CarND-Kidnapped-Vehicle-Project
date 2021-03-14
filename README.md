@@ -1,16 +1,17 @@
 # Overview
-This repository contains all the code needed to complete the final project for the Localization course in Udacity's Self-Driving Car Nanodegree.
+This repository is for the kidnapped vehicle project, which is a part of the Localization course in Udacity's Self-Driving Car Nanodegree.
 
-#### Submission
-All you will need to submit is your `src` directory. You should probably do a `git pull` before submitting to verify that your project passes the most up-to-date version of the grading code (there are some parameters in `src/main.cpp` which govern the requirements on accuracy and run time).
+
 
 ## Project Introduction
+
 Your robot has been kidnapped and transported to a new location! Luckily it has a map of this location, a (noisy) GPS estimate of its initial location, and lots of (noisy) sensor and control data.
 
-In this project you will implement a 2 dimensional particle filter in C++. Your particle filter will be given a map and some initial localization information (analogous to what a GPS would provide). At each time step your filter will also get observation and control data.
+This project presents a 2 dimensional particle filter in C++. The particle filter uses a map and some initial localization information (analogous to what a GPS would provide). At each time step the filter will also get observation and control data.
+
+
 
 ## Running the Code
-This project involves the Term 2 Simulator which can be downloaded [here](https://github.com/udacity/self-driving-car-sim/releases)
 
 This repository includes two files that can be used to set up and install uWebSocketIO for either Linux or Mac systems. For windows you can use either Docker, VMware, or even Windows 10 Bash on Ubuntu to install uWebSocketIO.
 
@@ -28,13 +29,9 @@ Alternatively some scripts have been included to streamline this process, these 
 2. ./build.sh
 3. ./run.sh
 
-Tips for setting up your environment can be found [here](https://classroom.udacity.com/nanodegrees/nd013/parts/40f38239-66b6-46ec-ae68-03afd8a601c8/modules/0949fca6-b379-42af-a919-ee50aa304e6a/lessons/f758c44c-5e40-4e01-93b5-1a82aa4e044f/concepts/23d376c7-0195-4276-bdf0-e02f1f3c665d)
+Tips for setting up your environment can be found [here](https://classroom.udacity.com/nanodegrees/nd013/parts/40f38239-66b6-46ec-ae68-03afd8a601c8/modules/0949fca6-b379-42af-a919-ee50aa304e6a/lessons/f758c44c-5e40-4e01-93b5-1a82aa4e044f/concepts/23d376c7-0195-4276-bdf0-e02f1f3c665d). The program main.cpp has already been filled out, and It uses for uWebSocketIO in communicating with the simulator.
 
-Note that the programs that need to be written to accomplish the project are src/particle_filter.cpp, and particle_filter.h
 
-The program main.cpp has already been filled out, but feel free to modify it.
-
-Here is the main protocol that main.cpp uses for uWebSocketIO in communicating with the simulator.
 
 INPUT: values provided by the simulator to the c++ program
 
@@ -81,13 +78,6 @@ OUTPUT: values provided by the c++ program to the simulator
 
 ["best_particle_sense_y"] <= list of sensed y positions
 
-
-Your job is to build out the methods in `particle_filter.cpp` until the simulator output says:
-
-```
-Success! Your particle filter passed!
-```
-
 # Implementing the Particle Filter
 The directory structure of this repository is as follows:
 
@@ -112,12 +102,10 @@ root
     |   particle_filter.h
 ```
 
-The only file you should modify is `particle_filter.cpp` in the `src` directory. The file contains the scaffolding of a `ParticleFilter` class and some associated methods. Read through the code, the comments, and the header file `particle_filter.h` to get a sense for what this code is expected to do.
-
-If you are interested, take a look at `src/main.cpp` as well. This file contains the code that will actually be running your particle filter and calling the associated methods.
+src/particle_filter.cpp contains the scaffolding of a `ParticleFilter` class and some associated methods, and src/main.cpp contains the code that will actually be running the particle filter and calling the associated methods.
 
 ## Inputs to the Particle Filter
-You can find the inputs to the particle filter in the `data` directory.
+The inputs to the particle filter are in the `data` directory.
 
 #### The Map*
 `map_data.txt` includes the position of landmarks (in meters) on an arbitrary Cartesian coordinate system. Each row has three columns
@@ -129,15 +117,279 @@ You can find the inputs to the particle filter in the `data` directory.
 
 > * Map data provided by 3D Mapping Solutions GmbH.
 
+
+
+## What I've done
+
+The basic structure was given at [here](https://github.com/udacity/CarND-Kidnapped-Vehicle-Project). In order to accomplish the project, I put some code to activate ParticleFilter::init(), ParticleFilter::prediction(), ParticleFilter::dataAssociation(), ParticleFilter::updateWeights(), and ParticleFilter::resample() in src/particle_filter.cpp. 
+
+![process](./0process.png)
+
+<div align="center">captured from classroom.udacity.com/nanodegrees/nd013
+
+
+
+###  ParticleFilter::init()
+
+This function sets the number of particles and initialize all particles to their first position (based on estimates of x, y, theta and their uncertaintiesfrom GPS) and weight 1.
+
+![init](./1init.png)
+
+<div align="center">captured from classroom.udacity.com/nanodegrees/nd013
+
+
+
+Based on the answer in  [here](https://knowledge.udacity.com/questions/29851), 100 particles are usedYou can see there is no significant increase in the accuracy when you use more than 100 particles in the figure below.
+
+```c++
+/// Set the number of particles
+num_particles = 100; 
+```
+![number of particles vs. error](https://udacity-user-uploads.s3.us-west-2.amazonaws.com/uploads/user-uploads/f4c3f14f-cab7-4ab1-8c02-5b4a79763070-mobile.png)
+
+<div align="center">captured from knowledge.udacity.com/questions/29851)
+
+```c++
+	/// Initialize all particles to first position with weight = 1
+	///     (based on estimates of x, y, theta and their uncertainties from GPS) 
+	normal_distribution<double> nd_x(x, std[0]);
+	normal_distribution<double> nd_y(y, std[1]);
+	normal_distribution<double> nd_theta(theta, std[2]);
+  
+	int i = -1;
+	while (++i < num_particles)
+	{
+		Particle sample;
+  
+		sample.id = i;
+		/// Add random Gaussian noise to each particle
+		sample.x = nd_x(gen);
+		sample.y = nd_y(gen);
+		sample.theta = nd_theta(gen); 
+		// all weights to 1
+		sample.weight = 1.0;
+
+		particles.push_back(sample);
+		weights.push_back(sample.weight);
+	}
+  
+	is_initialized = true;
+```
+
+
+###  ParticleFilter::prediction()
+
+This function adds measurements to each particle and add random Gaussian noise.
+
+
+
+![predict](./2predict.png)
+
+<div align="center">captured from classroom.udacity.com/nanodegrees/nd013
+
+
+
+```c++
+	/// Add measurements to each particle and add random Gaussian noise   
+	int i;
+  	double x0, y0, theta0;
+  	double x1, y1, theta1;
+  
+	i = -1;
+  	while (++i < num_particles)
+	{
+		x0 = particles[i].x;
+		y0 = particles[i].y;
+		theta0 = particles[i].theta;
+
+		if (fabs(yaw_rate) > 0.0001)	//theta0 != 0
+		{
+			theta1 = theta0 + yaw_rate * delta_t;
+			x1 = x0 + (velocity / yaw_rate) * (sin(theta1) - sin(theta0));
+			y1 = y0 + (velocity / yaw_rate) * (cos(theta0) - cos(theta1));
+		}
+		else							//theta0 = 0
+		{
+			theta1 = theta0;
+			x1 = x0 + velocity * cos(theta0) * delta_t;
+			y1 = y0 + velocity * sin(theta0) * delta_t;
+		}        
+      
+		normal_distribution<double> nd_x(x1, std_pos[0]);
+		normal_distribution<double> nd_y(y1, std_pos[1]);
+		normal_distribution<double> nd_theta(theta1, std_pos[2]);  
+      
+		particles[i].x = nd_x(gen);
+		particles[i].y = nd_y(gen);
+		particles[i].theta = nd_theta(gen);     
+	}  
+```
+
+
+###  ParticleFilter::dataAssociation()
+
+This function is used as a part of the process in the ParticleFilter::updateWeights() function, so it is called in the updateWeights() function.
+
+```c++
+/// Find the nearest neighbour landmark measurement of each observed measurement 
+/// then pair observations[i].id and nearest_landmark_id  
+double dist_ij, dist_min;
+int nearest_landmark_id;
+int i, j; 
+
+i = -1;
+while (++i < (int)observations.size())
+{
+	dist_min = std::numeric_limits<double>::max();
+	nearest_landmark_id = -1;
+
+	j = -1;
+	while (++j < (int)predicted.size())
+    {
+		dist_ij = dist(observations[i].x, observations[i].y, predicted[j].x, predicted[j].y);
+		if (dist_ij < dist_min)
+		{
+			dist_min = dist_ij;
+			nearest_landmark_id = predicted[j].id;
+		}
+	}
+	observations[i].id = nearest_landmark_id;
+}
+```
+
+
+###  ParticleFilter::updateWeights()
+
+This function updates the weights of each particle using a mult-variate Gaussian distribution. 
+
+![update_weights](./3update_weights.png)
+
+<div align="center">captured from classroom.udacity.com/nanodegrees/nd013
+
+
+
+```c++
+int i, j, k;
+double weight_sum = 0.0;
+  
+i = -1;  
+while (++i < (int)particles.size())
+{
+	Particle &p = particles[i];
+  
+	// Filter map landmarks to keep only in the sensor_range of from particle p
+	vector<LandmarkObs> predicted_lmobs;
+	j = -1;
+	while (++j < (int)map_landmarks.landmark_list.size()) 
+	{
+		Map::single_landmark_s lm = map_landmarks.landmark_list[j];
+		if ((fabs((p.x - lm.x_f)) <= sensor_range) && (fabs((p.y - lm.y_f)) <= sensor_range)) 
+		{
+			LandmarkObs predicted_lmob;
+			predicted_lmob.id = lm.id_i;
+			predicted_lmob.x = lm.x_f;
+			predicted_lmob.y = lm.y_f;              
+			predicted_lmobs.push_back(predicted_lmob);
+		}
+	}
+  
+	// Transform obs from vehicle coords to map coords
+	vector<LandmarkObs> trans_obs;
+	j = -1;
+	while (++j < (int)observations.size()) 
+	{
+		LandmarkObs ob = observations[j];
+      	LandmarkObs trans_ob;
+		trans_ob.id = j;
+		trans_ob.x = p.x + (cos(p.theta) * ob.x) - (sin(p.theta) * ob.y);
+		trans_ob.y = p.y + (sin(p.theta) * ob.x) + (cos(p.theta) * ob.y);
+		trans_obs.push_back(trans_ob);
+	}
+  
+	// Associate observations with predicted landmarks using nearest neighbor algorithm
+	dataAssociation(predicted_lmobs, trans_obs);
+  
+	// Calculate the weight of each particle using Multivariate Gaussian distribution.
+	p.weight = 1.0;
+	j = -1;
+	while (++j < (int)trans_obs.size())
+	{
+		LandmarkObs	&t_ob = trans_obs[j];
+		k = -1;
+		while (++k < (int)predicted_lmobs.size())
+        {
+			LandmarkObs &p_lmob = predicted_lmobs[k];
+			if (t_ob.id == p_lmob.id)
+				p.weight *= multiv_prob(std_landmark[0], std_landmark[1], 
+										t_ob.x, t_ob.y, p_lmob.x, p_lmob.y); 
+		}   
+    }  
+  
+	weight_sum += p.weight;
+//eoWhile(p)  
+}
+  
+// Normalize the weights of all particles; weight /= weight_sum
+i = -1;
+while (++i < (int)particles.size()) 
+{
+	particles[i].weight /= weight_sum;
+	weights[i] = particles[i].weight;
+}  
+```
+
+
+
+
+###  ParticleFilter::resample()
+
+This function resamples particles based on probability proportional to their weight. 
+
+![resample](./4resample.png)
+
+<div align="center">captured from classroom.udacity.com/nanodegrees/nd013
+
+
+
+```c++
+/// Resample particles with replacement with probability proportional to their weight
+vector<Particle> new_particles;
+uniform_int_distribution<int> ud_p_idx(0, num_particles - 1);  
+int p_index = ud_p_idx(gen);
+double beta = 0.0;
+double max_weight = *max_element(weights.begin(), weights.end());
+int i;  
+  
+i = -1;
+while (++i < (int)particles.size()) 
+{
+	uniform_real_distribution<double> random_weight(0.0, max_weight * 2.0);
+	beta += random_weight(gen);
+
+ 	while (weights[p_index] < beta) 
+	{
+		beta -= weights[p_index];
+		p_index = (p_index + 1) % num_particles;
+	}
+	new_particles.push_back(particles[p_index]);
+}
+
+particles = new_particles;
+```
+
+
 ## Success Criteria
-If your particle filter passes the current grading code in the simulator (you can make sure you have the current version at any time by doing a `git pull`), then you should pass!
+
+The particle filter has passed the current grading code in the simulator as you can see in the figure below.
 
 The things the grading code is looking for are:
 
 
-1. **Accuracy**: your particle filter should localize vehicle position and yaw to within the values specified in the parameters `max_translation_error` and `max_yaw_error` in `src/main.cpp`.
+1. **Accuracy**: This criteria is checked automatically when you do ./run.sh in the terminal. If the output says "Success! Your particle filter passed!" then it means you’ve met this criteria.
 
-2. **Performance**: your particle filter should complete execution within the time of 100 seconds.
+2. **Performance**: This criteria is checked automatically when you do ./run.sh in the terminal. If the output says "Success! Your particle filter passed!" then it means you’ve met this criteria.
 
-## How to write a README
-A well written README file can enhance your project and portfolio.  Develop your abilities to create professional README files by completing [this free course](https://www.udacity.com/course/writing-readmes--ud777).
+![in success criteria](./5success.png)
+
+<div align="center">captured from udacity carnd simulator
+

@@ -132,6 +132,8 @@ The basic structure was given at [here](https://github.com/udacity/CarND-Kidnapp
 
 <div align="left">
 
+<br/><br/>
+
 ###  ParticleFilter::init()
 
 This function sets the number of particles and initialize all particles to their first position (based on estimates of x, y, theta and their uncertaintiesfrom GPS) and weight 1.
@@ -156,7 +158,7 @@ num_particles = 100;
 
 <div align="left">
 
-
+<br/><br/>
 
 ```c++
 	/// Initialize all particles to first position with weight = 1
@@ -198,9 +200,7 @@ This function adds measurements to each particle and add random Gaussian noise.
 
 <div align="left">
 
-
-
-
+<br/><br/>
 
 ```c++
 	/// Add measurements to each particle and add random Gaussian noise   
@@ -269,7 +269,7 @@ while (++i < (int)observations.size())
 	observations[i].id = nearest_landmark_id;
 }
 ```
-
+<br/><br/>
 
 ###  ParticleFilter::updateWeights()
 
@@ -281,7 +281,7 @@ This function updates the weights of each particle using a mult-variate Gaussian
 
 <div align="left">
 
-
+<br/><br/>
 
 ```c++
 int i, j, k;
@@ -352,9 +352,7 @@ while (++i < (int)particles.size())
 	weights[i] = particles[i].weight;
 }  
 ```
-
-
-
+<br/><br/>
 
 ###  ParticleFilter::resample()
 
@@ -365,6 +363,8 @@ This function resamples particles based on probability proportional to their wei
 <div align="center">captured from classroom.udacity.com/nanodegrees/nd013
 
 <div align="left">
+
+<br/><br/>
 
 ```c++
 /// Resample particles with replacement with probability proportional to their weight
@@ -391,7 +391,7 @@ while (++i < (int)particles.size())
 
 particles = new_particles;
 ```
-
+<br/><br/>
 
 ## Success Criteria
 
@@ -410,3 +410,4 @@ The things the grading code is looking for are:
 
 <div align="left">
 
+<br/><br/>

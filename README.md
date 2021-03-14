@@ -148,13 +148,21 @@ The basic structure was given at [here](https://github.com/udacity/CarND-Kidnapp
 
 This function sets the number of particles and initialize all particles to their first position (based on estimates of x, y, theta and their uncertaintiesfrom GPS) and weight 1.
 
+![init](./img/1gps.png)
+
+<div align="center">captured from classroom.udacity.com/nanodegrees/nd013
+
+<div align="left">
+
+
+
 ![init](./img/1init.png)
 
 <div align="center">captured from classroom.udacity.com/nanodegrees/nd013
 
 <div align="left">
 
-<br/><br/><br/>
+<br/><br/>
 
 Based on the answer in  [here](https://knowledge.udacity.com/questions/29851), 100 particles are usedYou can see there is no significant increase in the accuracy when you use more than 100 particles in the figure below.
 
@@ -203,6 +211,10 @@ num_particles = 100;
 This function adds measurements to each particle and add random Gaussian noise.
 
 
+
+![predict](./img/2move+noise.png)
+
+<div align="center">captured from classroom.udacity.com/nanodegrees/nd013
 
 ![predict](./img/2predict.png)
 
@@ -253,6 +265,14 @@ This function adds measurements to each particle and add random Gaussian noise.
 
 This function is used as a part of the process in the ParticleFilter::updateWeights() function, so it is called in the updateWeights() function.
 
+![predict](./img/3nearestneighbour.png)
+
+<div align="center">captured from classroom.udacity.com/nanodegrees/nd013
+
+<div align="left">
+
+<br/><br/>
+
 ```c++
 /// Find the nearest neighbour landmark measurement of each observed measurement 
 /// then pair observations[i].id and nearest_landmark_id  
@@ -286,6 +306,44 @@ while (++i < (int)observations.size())
 This function updates the weights of each particle using a mult-variate Gaussian distribution. 
 
 ![update_weights](./img/3update_weights.png)
+
+<div align="center">captured from classroom.udacity.com/nanodegrees/nd013
+
+<div align="left">
+
+<br/><br/>
+
+![predict](./img/3multiv_prob.png)
+
+<div align="center">captured from classroom.udacity.com/nanodegrees/nd013
+
+<div align="left">
+
+<br/><br/>
+
+```c++
+double multiv_prob(double sig_x, double sig_y, double x_obs, double y_obs,
+                   double mu_x, double mu_y) {
+  // calculate normalization term
+  double gauss_norm;
+  gauss_norm = 1 / (2 * M_PI * sig_x * sig_y);
+
+  // calculate exponent
+  double exponent;
+  exponent = (pow(x_obs - mu_x, 2) / (2 * pow(sig_x, 2)))
+               + (pow(y_obs - mu_y, 2) / (2 * pow(sig_y, 2)));
+    
+  // calculate weight using normalization terms and exponent
+  double weight;
+  weight = gauss_norm * exp(-exponent);
+    
+  return weight;
+}
+```
+
+<br/><br/>
+
+![predict](./img/3weights.png)
 
 <div align="center">captured from classroom.udacity.com/nanodegrees/nd013
 
@@ -367,6 +425,14 @@ while (++i < (int)particles.size())
 ###  ParticleFilter::resample()
 
 This function resamples particles based on probability proportional to their weight. 
+
+![predict](./img/4resamplingwheel.png)
+
+<div align="center">captured from classroom.udacity.com/nanodegrees/nd013
+
+<div align="left">
+
+<br/><br/>
 
 ![resample](./img/4resample.png)
 

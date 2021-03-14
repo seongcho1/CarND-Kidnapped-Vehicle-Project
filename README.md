@@ -305,13 +305,7 @@ while (++i < (int)observations.size())
 
 This function updates the weights of each particle using a mult-variate Gaussian distribution. 
 
-![update_weights](./img/3update_weights.png)
 
-<div align="center">captured from classroom.udacity.com/nanodegrees/nd013
-
-<div align="left">
-
-<br/><br/>
 
 ![predict](./img/3multiv_prob.png)
 
@@ -344,6 +338,14 @@ double multiv_prob(double sig_x, double sig_y, double x_obs, double y_obs,
 <br/><br/>
 
 ![predict](./img/3weights.png)
+
+<div align="center">captured from classroom.udacity.com/nanodegrees/nd013
+
+<div align="left">
+
+<br/><br/>
+
+![update_weights](./img/3update_weights.png)
 
 <div align="center">captured from classroom.udacity.com/nanodegrees/nd013
 

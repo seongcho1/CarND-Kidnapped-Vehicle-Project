@@ -2,7 +2,7 @@
 
 # Overview
 
-This repository is for the kidnapped vehicle project, which is a part of the Localization course in Udacity's Self-Driving Car Nanodegree. The original repo can be found at https://github.com/udacity/CarND-Kidnapped-Vehicle-Project. 
+This repository is for the kidnapped vehicle project, which is a part of the Localization course in Udacity's Self-Driving Car Nanodegree. The original repo can be found at [here]( https://github.com/udacity/CarND-Kidnapped-Vehicle-Project).
 
 This README.md also based on the original README.md.
 
@@ -136,7 +136,7 @@ The inputs to the particle filter are in the `data` directory.
 
 The basic structure was given at [here](https://github.com/udacity/CarND-Kidnapped-Vehicle-Project). In order to accomplish the project, I put some code to activate ParticleFilter::init(), ParticleFilter::prediction(), ParticleFilter::dataAssociation(), ParticleFilter::updateWeights(), and ParticleFilter::resample() in src/particle_filter.cpp. 
 
-![process](./0process.png)
+![process](./img/0process.png)
 
 <div align="center">captured from classroom.udacity.com/nanodegrees/nd013
 
@@ -148,7 +148,7 @@ The basic structure was given at [here](https://github.com/udacity/CarND-Kidnapp
 
 This function sets the number of particles and initialize all particles to their first position (based on estimates of x, y, theta and their uncertaintiesfrom GPS) and weight 1.
 
-![init](./1init.png)
+![init](./img/1init.png)
 
 <div align="center">captured from classroom.udacity.com/nanodegrees/nd013
 
@@ -204,7 +204,7 @@ This function adds measurements to each particle and add random Gaussian noise.
 
 
 
-![predict](./2predict.png)
+![predict](./img/2predict.png)
 
 <div align="center">captured from classroom.udacity.com/nanodegrees/nd013
 
@@ -285,7 +285,7 @@ while (++i < (int)observations.size())
 
 This function updates the weights of each particle using a mult-variate Gaussian distribution. 
 
-![update_weights](./3update_weights.png)
+![update_weights](./img/3update_weights.png)
 
 <div align="center">captured from classroom.udacity.com/nanodegrees/nd013
 
@@ -368,7 +368,7 @@ while (++i < (int)particles.size())
 
 This function resamples particles based on probability proportional to their weight. 
 
-![resample](./4resample.png)
+![resample](./img/4resample.png)
 
 <div align="center">captured from classroom.udacity.com/nanodegrees/nd013
 
@@ -414,7 +414,7 @@ The things the grading code is looking for are:
 
 2. **Performance**: This criteria is checked automatically when you do ./run.sh in the terminal. If the output says "Success! Your particle filter passed!" then it means you’ve met this criteria.
 
-![in success criteria](./5success.png)
+![in success criteria](./img/5success.png)
 
 <div align="center">captured from udacity carnd simulator
 

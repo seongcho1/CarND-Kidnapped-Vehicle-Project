@@ -142,11 +142,7 @@ This function sets the number of particles and initialize all particles to their
 
 <div align="left">
 
-
-
-
-
-
+<br/><br/><br/>
 
 Based on the answer in  [here](https://knowledge.udacity.com/questions/29851), 100 particles are usedYou can see there is no significant increase in the accuracy when you use more than 100 particles in the figure below.
 

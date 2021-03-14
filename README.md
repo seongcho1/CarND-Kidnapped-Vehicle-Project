@@ -475,13 +475,6 @@ particles = new_particles;
 
 The particle filter has passed the current grading code in the simulator as you can see in the figure below.
 
-The things the grading code is looking for are:
-
-
-1. **Accuracy**: This criteria is checked automatically when you do ./run.sh in the terminal. If the output says "Success! Your particle filter passed!" then it means you’ve met this criteria.
-
-2. **Performance**: This criteria is checked automatically when you do ./run.sh in the terminal. If the output says "Success! Your particle filter passed!" then it means you’ve met this criteria.
-
 ![in success criteria](./img/5success.png)
 
 <div align="center">captured from udacity carnd simulator
@@ -489,3 +482,10 @@ The things the grading code is looking for are:
 <div align="left">
 
 <br/><br/>
+
+The things the grading code is looking for are:
+
+
+1. **Accuracy**: This criteria is checked automatically when you do ./run.sh in the terminal. If the output says "Success! Your particle filter passed!" then it means you’ve met this criteria.
+
+2. **Performance**: This criteria is checked automatically when you do ./run.sh in the terminal. If the output says "Success! Your particle filter passed!" then it means you’ve met this criteria.
